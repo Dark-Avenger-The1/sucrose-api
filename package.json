@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Dark-Avenger-The1/sucrose-api/issues"
   },
-  "homepage": "https://github.com/Dark-Avenger-The1/sucrose-api#readme"
+  "homepage": "https://github.com/Dark-Avenger-The1/sucrose-api#readme",
+  "dependencies": {
+    "express": "^5.3.0"
+  }
 }

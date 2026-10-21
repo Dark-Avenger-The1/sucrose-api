@@ -1,0 +1,19 @@
+{
+  "name": "sucrose-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dark-Avenger-The1/sucrose-api.git"
+  },
+  "author": "Dark-Avenger-The1",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dark-Avenger-The1/sucrose-api/issues"
+  },
+  "homepage": "https://github.com/Dark-Avenger-The1/sucrose-api#readme"
+}

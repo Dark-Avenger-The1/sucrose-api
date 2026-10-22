@@ -12,7 +12,7 @@ export default async function checkInput(age=null,genders=null,glucose=null){
     if(glucose!=null && glucose<rules.glucose_range_mg_dl[0] || glucose>rules.glucose_range_mg_dl[1]){
         return true;
     }
-
+    
     
 
     return false;

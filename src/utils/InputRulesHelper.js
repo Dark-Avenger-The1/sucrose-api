@@ -1,36 +1,15 @@
 import readModel from "./sucroseModelReader.js";
 
-export default async function checkInput(age=null,genders=null,glucose=null){
-    const data = await readModel();
-    const rules = data.input_rules;
-    if(age!=null && age<rules.min_age){
-        return true;
-    }
-    if(genders!=null && (genders!=rules.genders[0] && genders!=rules.genders[1])){
-        return true;
-    }
-    if(glucose!=null && glucose<rules.glucose_range_mg_dl[0] || glucose>rules.glucose_range_mg_dl[1]){
-        return true;
-    }
-    
-    
+export default async function checkInput(age = null, gender = null, glucose = null) {
+    const { input_rules: rules } = await readModel();
+    const [minG, maxG] = rules.glucose_range_mg_dl;
 
-    return false;
+    if (age != null && age < rules.min_age)
+        return `age must be ${rules.min_age} or older`;
+    if (gender != null && !rules.genders.includes(gender))
+        return `gender must be one of: ${rules.genders.join(", ")}`;
+    if (glucose != null && (glucose < minG || glucose > maxG))
+        return `glucose must be between ${minG} and ${maxG} mg/dL`;
+
+    return null;
 }
-
-// const test = async ()=>{
-//     console.log(`Test 1: ${await checkInput()}`);
-//     console.log(`Test 2: ${await checkInput(17)}`);
-//     console.log(`Test 3: ${await checkInput(20,"gae")}`);
-//     console.log(`Test 4: ${await checkInput(19,"lesbian")}`);
-//     console.log(`Test 5: ${await checkInput(19,"male",19)}`);
-//     console.log(`Test 6: ${await checkInput(19,"male",601)}`);
-//     console.log(`Test 7: ${await checkInput(19)}`);
-//     console.log(`Test 8: ${await checkInput(20,"male")}`);
-//     console.log(`Test 9: ${await checkInput(19,"male",100)}`);
-//     console.log(`Test 10: ${await checkInput(null,"male",100)}`);
-//     console.log(`Test 11: ${await checkInput(null,null,100)}`);
-
-// }
-
-// test();

@@ -5,12 +5,8 @@ import getGlucoseRange from "../utils/GlucoseRange.js";
 export default async function getRecommendation(glucose,age,gender){
     const data = await readModel();
     const recommendations = data.recommendations;
-    console.log(data)
     const glucose_level = getGlucoseRange(data,glucose);
     const age_groups  = getAgeRange(data,age);
     const foodSuggestion = extractFoodSugestion(recommendations,glucose_level,age_groups,gender);
-    console.log(foodSuggestion)
-
+    return foodSuggestion;
 }
-
-getRecommendation(101,20,"male")

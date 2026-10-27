@@ -4,3 +4,6 @@ export default function extractFoodSugestion(obj, glucoseRange,ageRange,gender){
     return data;
 }
 
+export default function extractObject(obj,objName){
+    return obj[objName];
+}

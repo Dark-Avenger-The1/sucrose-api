@@ -1,0 +1,112 @@
+.about {
+  max-width: 46rem;
+  padding-block: clamp(40px, 8vw, 88px) 0;
+}
+
+.about h1 {
+  font-size: clamp(2.25rem, 5.4vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.04em;
+  max-width: 16ch;
+}
+
+.about .lead {
+  margin-top: 20px;
+  font-size: 1.1875rem;
+  color: var(--ink-2);
+  max-width: 36rem;
+}
+
+.about section {
+  margin-top: clamp(40px, 6vw, 64px);
+  padding-top: clamp(32px, 5vw, 48px);
+  border-top: 1px solid var(--border);
+}
+
+.about section > * + * {
+  margin-top: 16px;
+}
+
+.about section > h2 + * {
+  margin-top: 12px;
+}
+
+.about p, .about li {
+  color: var(--ink-2);
+}
+
+.about ul.plain {
+  padding-left: 20px;
+  display: grid;
+  gap: 8px;
+}
+
+.facts {
+  display: grid;
+  margin: 0;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+}
+
+.facts div {
+  display: grid;
+  gap: 2px 24px;
+  padding: 14px 18px;
+  border-top: 1px solid var(--border);
+}
+@media (min-width: 36rem) {
+  .facts div {
+    grid-template-columns: 11rem 1fr;
+  }
+}
+
+.facts div:first-child {
+  border-top: 0;
+}
+
+.facts dt {
+  color: var(--ink-2);
+  font-size: 0.9375rem;
+}
+
+.facts dd {
+  color: var(--ink);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.team {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0;
+}
+
+.team li {
+  padding-block: 16px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  gap: 2px;
+}
+.team li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+.team strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.team span {
+  font-size: 0.9375rem;
+}
+
+.team a {
+  font-size: 0.9375rem;
+  justify-self: start;
+}
+
+/*# sourceMappingURL=about.css.map */

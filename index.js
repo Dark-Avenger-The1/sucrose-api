@@ -2,8 +2,14 @@ import express from "express";
 import cors from "cors";
 import router from "./routes.js";
 
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+// after app.use("/api", router):
+app.use(express.static(path.join(__dirname, "src", "public")));
 
 app.use(cors());
 app.use(express.json());

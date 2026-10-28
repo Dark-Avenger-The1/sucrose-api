@@ -20,5 +20,3 @@ const test = async (num=null,groupCode,glucose)=>{
     const data = itemForLevel(model,groupCode,glucose);
     console.log(data.length);
 }
-
-test(1,631,80)

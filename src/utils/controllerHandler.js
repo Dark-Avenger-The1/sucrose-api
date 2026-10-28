@@ -1,5 +1,5 @@
 import checkInput from "./InputRulesHelper.js";
-
+import glucoseChecker from "../services/CheckGlucose.js";
 function parseInput(query) {
     const glucose = Number(query.glucose);
     const age = Number(query.age);
@@ -36,4 +36,17 @@ const handle = (service) => async (req, res, next) => {
     }
 };
 
-export default handle;
+const handleGlucose = (service)=>async(req,res,next)=>{
+    try {
+        const glucose = Number(req.query.glucose);
+
+        const result = await service(glucose);
+        if (!result)
+            return res.status(404).json({ error: "No recommendation found for this input" });
+
+        res.json(result);
+    } catch (error) {
+        next(error.message); 
+    }
+}
+export {handle,handleGlucose};

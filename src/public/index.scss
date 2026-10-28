@@ -1,0 +1,106 @@
+// Homepage
+
+.hero {
+  display: grid; gap: clamp(32px, 6vw, 64px); align-items: center;
+  padding-block: clamp(40px, 8vw, 96px);
+  @media (min-width: 56rem) { grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); }
+  h1 {
+    font-size: clamp(2.5rem, 6.4vw, 4.25rem); line-height: 1.03; letter-spacing: -0.04em;
+    max-width: 11ch;
+  }
+  .lead { margin-top: 20px; max-width: 32rem; font-size: 1.1875rem; line-height: 1.5; color: var(--ink-2); }
+  .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
+}
+
+// The live reading: the same glucose ladder the app shows on its results screen
+.demo {
+  padding: clamp(20px, 3vw, 32px); border-radius: var(--r-md); background: var(--surface);
+  display: grid; gap: 20px;
+  .label { font-weight: 600; }
+  .hint { font-size: 0.8125rem; color: var(--ink-3); margin-top: 4px; }
+  .field {
+    display: flex; align-items: baseline; gap: 10px;
+    padding: 10px 16px; border-radius: var(--r-md);
+    background: var(--ground); border: 1px solid var(--border-strong);
+    &:focus-within { border-color: var(--accent); outline: 2px solid var(--accent); outline-offset: 0; }
+    &[data-invalid="true"] { border-color: var(--danger); }
+    input {
+      flex: 1; min-width: 0; padding: 0; border: 0; background: transparent; color: var(--ink);
+      font: 600 1.75rem/2.125rem var(--sans); font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
+      &:focus { outline: none; }
+      appearance: textfield; -moz-appearance: textfield;
+      &::-webkit-outer-spin-button, &::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    }
+    .unit { color: var(--ink-2); font-size: 1.0625rem; }
+  }
+  .error { color: var(--danger); font-size: 0.9375rem; }
+  input[type="range"] { width: 100%; margin: 0; accent-color: var(--accent); }
+  .result { display: grid; gap: 16px; }
+  .result[hidden] { display: none; }
+  .badges { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+  .level-text { font-size: 0.9375rem; color: var(--ink-2); }
+}
+
+// Glucose ladder (glucose-ladder.tsx): 8 segments tinted by clinical band, active one filled, reading marked
+.ladder { padding-top: 8px; }
+.ladder__bar { position: relative; display: flex; gap: 3px; height: 12px; --pos: 0; --i: 0; }
+.ladder__seg {
+  flex: 1; border-radius: 4px; background: var(--tint);
+  transition: background-color 180ms var(--ease-out);
+  &[data-tone="low"] { --tint: var(--low-tint); --fill: var(--low-fill); }
+  &[data-tone="normal"] { --tint: var(--normal-tint); --fill: var(--normal-fill); }
+  &[data-tone="elevated"] { --tint: var(--elevated-tint); --fill: var(--elevated-fill); }
+  &[data-tone="high"] { --tint: var(--high-tint); --fill: var(--high-fill); }
+  &.is-active { background: var(--fill); }
+}
+.ladder__marker {
+  position: absolute; top: -7px; width: 6px; height: 26px; margin-left: -3px;
+  border-radius: 3px; background: var(--ink); border: 1.5px solid var(--surface);
+  left: calc((100% - 21px) / 8 * var(--pos) + 3px * var(--i));
+  transition: left 180ms var(--ease-out);
+}
+.ladder__ticks {
+  display: flex; gap: 3px; margin-top: 8px;
+  font-size: 0.75rem; color: var(--ink-3); font-variant-numeric: tabular-nums;
+  span { flex: 1; margin-left: -2px; &.is-active { color: var(--ink); font-weight: 600; } }
+}
+
+.limits { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.limits li { display: grid; grid-template-columns: 7rem 1fr 4rem; align-items: center; gap: 12px; font-size: 0.9375rem; }
+.limits .track { height: 8px; border-radius: 4px; background: var(--surface-pressed); overflow: hidden; }
+.limits .fill { display: block; height: 100%; border-radius: 4px; background: var(--accent); transition: width 180ms var(--ease-out); }
+.limits .val { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+.limits-caption { font-size: 0.8125rem; color: var(--ink-3); }
+
+// Sections
+.section { padding-block: clamp(48px, 8vw, 96px); border-top: 1px solid var(--border); }
+.section__head { max-width: 38rem; margin-bottom: clamp(28px, 5vw, 48px); p { margin-top: 12px; color: var(--ink-2); } }
+
+.split { display: grid; gap: clamp(28px, 5vw, 64px); align-items: start; @media (min-width: 56rem) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+
+.rows { list-style: none; margin: 0; padding: 0; }
+.rows li { padding-block: 20px; border-top: 1px solid var(--border); &:first-child { border-top: 0; padding-top: 0; } }
+.rows h3 { margin-bottom: 6px; }
+.rows p { color: var(--ink-2); font-size: 0.9375rem; line-height: 1.5; max-width: 34rem; }
+.rows a { font-size: 0.9375rem; font-weight: 600; display: inline-block; margin-top: 8px; }
+
+.plan {
+  padding: clamp(20px, 3vw, 28px); border-radius: var(--r-md); background: var(--surface);
+  display: grid; gap: 20px;
+  .caption { font-size: 0.8125rem; color: var(--ink-2); }
+  .meal { display: grid; gap: 8px; padding-top: 16px; border-top: 1px solid var(--border-strong); }
+  .meal:first-of-type { border-top: 0; padding-top: 0; }
+  .meal ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; }
+  .meal li { font-size: 0.9375rem; }
+  .pair { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; font-size: 0.9375rem; }
+}
+
+.steps { list-style: none; margin: 0; padding: 0; display: grid; gap: 32px; counter-reset: step; @media (min-width: 56rem) { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px; } }
+.steps li { counter-increment: step; display: grid; gap: 8px; align-content: start; }
+.steps li::before {
+  content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--normal-tint); color: var(--normal-ink); font-weight: 600; font-variant-numeric: tabular-nums;
+}
+.steps p { color: var(--ink-2); font-size: 0.9375rem; max-width: 26rem; }
+
+.cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 24px; p { margin-top: 8px; color: var(--ink-2); max-width: 32rem; } }

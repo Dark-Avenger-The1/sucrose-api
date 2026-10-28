@@ -3,10 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sucrose: foods that fit your blood sugar</title>
+    <meta name="description" content="Enter a blood sugar reading, age and gender. Sucrose suggests foods, pairings and a day&#x27;s meal plan based on what adults at that level commonly eat.">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/sucrose-icon-1024.png">
+    <link rel="preload" href="fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="site.css">
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="brand" href="index.html" aria-label="Sucrose home"><img src="assets/sucrose-logo.svg" alt="Sucrose" width="126" height="36"></a>
+            <nav aria-label="Main">
+                <a href="index.html" aria-current="page">Home</a>
+                <a href="docs.html">Documentation</a>
+                <a href="about.html">About Us</a>
+            </nav>
+        </div>
+    </header>
+    <main id="main">
+        <div class="wrap">
+            <section class="hero" aria-labelledby="hero-title">
+                <div>
+                    <h1 id="hero-title">Foods that fit your blood sugar</h1>
+                    <p class="lead">Give Sucrose a reading, an age and a gender. It returns food groups, pairings and a day’s meal plan drawn from what adults at your level commonly eat.</p>
+                    <div class="actions">
+                        <a class="btn btn--primary" href="docs.html">Read the documentation</a>
+                        <a class="btn btn--secondary" href="#how-it-works">How it works</a>
+                    </div>
+                </div>
+
+                <div class="demo" aria-label="Try a reading">
+                    <div>
+                        <label class="label" for="glucose">Blood sugar</label>
+                        <p class="hint">Any reading from your meter, 20 to 600 mg/dL.</p>
+                    </div>
+                    <div class="field" id="glucose-field" data-invalid="false">
+                        <input id="glucose" type="number" inputmode="numeric" min="20" max="600" step="1" value="105" aria-describedby="glucose-error">
+                        <span class="unit">mg/dL</span>
+                    </div>
+                    <input id="glucose-slider" type="range" min="40" max="240" step="1" value="105" aria-label="Adjust blood sugar">
+                    <p class="error" id="glucose-error" role="alert" hidden>Enter a reading between 20 and 600 mg/dL.</p>
+                    <div class="result" id="result" aria-live="polite">
+                        <div class="badges">
+                            <span class="pill" id="band-pill" data-tone="elevated">Prediabetes</span>
+                            <span class="level-text" id="level-text"></span>
+                        </div>
+                        <div class="ladder">
+                            <div class="ladder__bar" id="ladder-bar" role="img">
+                                <span class="ladder__marker" id="ladder-marker"></span>
+                            </div>
+                            <div class="ladder__ticks" id="ladder-ticks" aria-hidden="true"></div>
+                        </div>
+                        <ul class="limits" id="limits">
+                            <li data-k="sugar"><span>Sugar</span><span class="track"><span class="fill"></span></span><span class="val"></span></li>
+                            <li data-k="carb"><span>Net carbs</span><span class="track"><span class="fill"></span></span><span class="val"></span></li>
+                            <li data-k="fat"><span>Saturated fat</span><span class="track"><span class="fill"></span></span><span class="val"></span></li>
+                        </ul>
+                        <p class="limits-caption">Most a food can have per 100 g at this level. The limits tighten as the level rises.</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <section class="section" aria-labelledby="get-title">
+            <div class="wrap">
+                <div class="section__head">
+                    <h2 id="get-title">One reading, three kinds of answer</h2>
+                </div>
+                <div class="split">
+                    <ul class="rows">
+                        <li>
+                            <h3>Foods</h3>
+                            <p>Food groups adults like you commonly eat, with the specific foods inside each group that stay within your level’s limits.</p>
+                            <a href="docs.html#food">Foods endpoint</a>
+                        </li>
+                        <li>
+                            <h3>Combos</h3>
+                            <p>Pairs of food groups that people at your level often eat together, such as milk with fresh fruit.</p>
+                            <a href="docs.html#combo">Combos endpoint</a>
+                        </li>
+                        <li>
+                            <h3>Meal plan</h3>
+                            <p>Breakfast, lunch and dinner built from those groups. No group repeats in a day, and a new request returns a new plan.</p>
+                            <a href="docs.html#meal-plan">Meal plan endpoint</a>
+                        </li>
+                    </ul>
+                    <div class="plan">
+                        <p class="caption">Sample plan for 105 mg/dL, age 30, male</p>
+                        <div class="meal">
+                            <h3>Breakfast</h3>
+                            <p class="pair"><span class="pill" data-tone="normal">Eaten together</span>Salad vegetables and Raw tomatoes</p>
+                            <ul><li>Tortillas and cornbread</li></ul>
+                        </div>
+                        <div class="meal">
+                            <h3>Lunch</h3>
+                            <p class="pair"><span class="pill" data-tone="normal">Eaten together</span>Fresh fruit and Cooked vegetables</p>
+                            <ul><li>Wheat bread</li></ul>
+                        </div>
+                        <div class="meal">
+                            <h3>Dinner</h3>
+                            <ul><li>Milk</li><li>Scrambled eggs and omelets</li><li>Eggs boiled or fried</li></ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="how-it-works" aria-labelledby="how-title">
+            <div class="wrap">
+                <div class="section__head">
+                    <h2 id="how-title">How the suggestions are made</h2>
+                </div>
+                <ol class="steps">
+                    <li>
+                        <h3>Match your reading to a glucose level</h3>
+                        <p>Eight levels run from under 80 to 200+ mg/dL. Each has its own limits for sugar, net carbs and saturated fat per 100 g.</p>
+                    </li>
+                    <li>
+                        <h3>Find what adults like you eat</h3>
+                        <p>ECLAT, a frequent-pattern mining method, finds the foods and pairs most common among 1,885 adults in NHANES 2017–2018, split by age group and gender.</p>
+                    </li>
+                    <li>
+                        <h3>Keep what fits the limits</h3>
+                        <p>Every food group and every item inside it is checked against the level’s limits, so the same group can offer fewer items as the level rises.</p>
+                    </li>
+                </ol>
+            </div>
+        </section>
+
+        <section class="section" aria-labelledby="build-title">
+            <div class="wrap">
+                <div class="cta">
+                    <div>
+                        <h2 id="build-title">Build with the API</h2>
+                        <p>Four GET endpoints, JSON responses, no API key. Try a request from the documentation page.</p>
+                    </div>
+                    <a class="btn btn--primary" href="docs.html">Read the documentation</a>
+                </div>
+                <div class="notice" style="margin-top:32px"><strong>Educational prototype, not medical advice.</strong> Talk to a doctor or dietitian before changing what you eat, especially if you take medication for blood sugar.</div>
+            </div>
+        </section>
+    </main>
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="foot-top">
+                <div class="foot-brand"><img class="mark" src="assets/sucrose-mark.svg" alt="" width="28" height="28">Sucrose</div>
+                <nav aria-label="Footer">
+                    <a href="index.html">Home</a>
+                    <a href="docs.html">Documentation</a>
+                    <a href="about.html">About Us</a>
+                </nav>
+            </div>
+            <p>Educational prototype, not medical advice. Suggestions come from NHANES 2017–2018 food records of adults without diagnosed diabetes.</p>
+        </div>
+    </footer>
+    <script src="js/home.js"></script>
 </body>
 </html>

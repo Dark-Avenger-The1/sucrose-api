@@ -1,1 +1,311 @@
+.docs {
+  display: grid;
+  gap: 32px;
+  padding-block: clamp(32px, 6vw, 64px);
+}
+@media (min-width: 60rem) {
+  .docs {
+    grid-template-columns: 220px minmax(0, 1fr);
+    gap: 64px;
+  }
+}
+
+.toc {
+  align-self: start;
+  font-size: 0.9375rem;
+}
+@media (min-width: 60rem) {
+  .toc {
+    position: sticky;
+    top: 24px;
+  }
+}
+.toc p {
+  font-size: 0.8125rem;
+  color: var(--ink-3);
+  margin-bottom: 8px;
+}
+.toc ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 16px;
+}
+@media (min-width: 60rem) {
+  .toc ul {
+    display: grid;
+    gap: 2px;
+  }
+}
+.toc a {
+  display: block;
+  padding: 4px 0;
+  color: var(--ink-2);
+  text-decoration: none;
+}
+.toc a:hover {
+  color: var(--ink);
+}
+@media (min-width: 60rem) {
+  .toc a {
+    padding: 6px 12px;
+    margin-left: -12px;
+    border-radius: var(--r-sm);
+  }
+  .toc a:hover {
+    background: var(--surface);
+  }
+}
+
+.doc {
+  max-width: 46rem;
+  min-width: 0;
+}
+
+.doc > header {
+  margin-bottom: 8px;
+}
+.doc > header h1 {
+  font-size: clamp(2rem, 4.5vw, 2.75rem);
+  letter-spacing: -0.035em;
+}
+.doc > header .lead {
+  margin-top: 16px;
+  color: var(--ink-2);
+  font-size: 1.1875rem;
+}
+
+.doc section {
+  padding-top: 48px;
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+  scroll-margin-top: 16px;
+}
+
+.doc > header + section {
+  margin-top: 32px;
+}
+
+.doc section > * + * {
+  margin-top: 16px;
+}
+
+.doc section > h2 + * {
+  margin-top: 12px;
+}
+
+.doc h3 {
+  margin-top: 28px;
+}
+
+.doc p, .doc li {
+  color: var(--ink-2);
+}
+
+.doc p code, .doc li code, .doc td code, .doc th code {
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.875em;
+}
+
+.doc ul.plain {
+  padding-left: 20px;
+  display: grid;
+  gap: 6px;
+}
+
+.endpoint-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.endpoint-line code {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  color: var(--ink);
+  background: none;
+  padding: 0;
+}
+
+.method {
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--normal-tint);
+  color: var(--normal-ink);
+  font: 600 0.8125rem/1.4 var(--mono);
+}
+
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9375rem;
+}
+
+th, td {
+  padding: 10px 14px;
+  text-align: left;
+  vertical-align: top;
+}
+
+th {
+  background: var(--surface);
+  color: var(--ink-2);
+  font-weight: 600;
+  font-size: 0.8125rem;
+  white-space: nowrap;
+}
+
+td {
+  border-top: 1px solid var(--border);
+  color: var(--ink-2);
+}
+
+td:first-child {
+  color: var(--ink);
+}
+
+td code, th code {
+  white-space: nowrap;
+}
+
+.num-col {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.code {
+  position: relative;
+}
+
+.code pre {
+  margin: 0;
+  padding: 16px 18px;
+  overflow-x: auto;
+  border-radius: var(--r-md);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.code .copy {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--r-sm);
+  background: var(--ground);
+  color: var(--ink-2);
+  font: 600 0.75rem/1.4 var(--sans);
+  cursor: pointer;
+}
+.code .copy:hover {
+  color: var(--ink);
+}
+
+.label-line {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+
+.try {
+  padding: clamp(16px, 3vw, 24px);
+  border-radius: var(--r-md);
+  background: var(--surface);
+  display: grid;
+  gap: 16px;
+}
+
+.try form {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  align-items: start;
+}
+
+.try .wide {
+  grid-column: 1/-1;
+}
+
+.try label {
+  display: grid;
+  gap: 6px;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.try label small {
+  font-weight: 400;
+  color: var(--ink-3);
+  font-size: 0.8125rem;
+}
+
+.try input, .try select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: var(--r-md);
+  border: 1px solid var(--border-strong);
+  background: var(--ground);
+  color: var(--ink);
+  font: 400 1rem/1.2 var(--sans);
+}
+
+.try input:disabled, .try select:disabled {
+  opacity: 0.45;
+}
+
+.try .out {
+  display: grid;
+  gap: 10px;
+}
+
+.try .out[hidden] {
+  display: none;
+}
+
+.try .meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+
+.try .meta code {
+  color: var(--ink);
+  background: none;
+  padding: 0;
+  word-break: break-all;
+}
+
+.try pre {
+  margin: 0;
+  padding: 14px 16px;
+  max-height: 360px;
+  overflow: auto;
+  border-radius: var(--r-md);
+  background: var(--ground);
+  font-size: 0.8125rem;
+  line-height: 1.55;
+}
+
 /*# sourceMappingURL=docs.css.map */

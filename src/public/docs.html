@@ -3,30 +3,324 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucrose API documentation</title>
+    <meta name="description" content="Reference for the Sucrose API: four GET endpoints that return food suggestions from a blood sugar reading, age and gender.">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/sucrose-icon-1024.png">
+    <link rel="preload" href="fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="site.css">
     <link rel="stylesheet" href="docs.css">
-    <title>Document</title>
 </head>
 <body>
-    <header>
-        <span>
-            <h1>Sucrose</h1>
-
-        </span>
-        <nav>
-            <a href="#">Documentation</a>
-            <a href="#">About Us</a>
-        </nav>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="brand" href="index.html" aria-label="Sucrose home"><img src="assets/sucrose-logo.svg" alt="Sucrose" width="126" height="36"></a>
+            <nav aria-label="Main">
+                <a href="index.html">Home</a>
+                <a href="docs.html" aria-current="page">Documentation</a>
+                <a href="about.html">About Us</a>
+            </nav>
+        </div>
     </header>
-    <main>
-        <section>
+    <main id="main">
+        <div class="wrap docs">
+            <aside class="toc" aria-label="On this page">
+                <p>On this page</p>
+                <ul>
+                    <li><a href="#overview">Overview</a></li>
+                    <li><a href="#try-it">Try it</a></li>
+                    <li><a href="#parameters">Parameters</a></li>
+                    <li><a href="#glucose-check">Glucose check</a></li>
+                    <li><a href="#food">Foods</a></li>
+                    <li><a href="#combo">Combos</a></li>
+                    <li><a href="#meal-plan">Meal plan</a></li>
+                    <li><a href="#levels">Glucose levels</a></li>
+                    <li><a href="#errors">Errors</a></li>
+                </ul>
+            </aside>
 
-        </section>
-        <article>
-            
-        </article>
+            <article class="doc">
+                <header>
+                    <h1>API documentation</h1>
+                    <p class="lead">Turn a blood sugar reading, age and gender into food suggestions.</p>
+                </header>
+
+                <section id="overview">
+                    <h2>Overview</h2>
+                    <p>The Sucrose API serves the ECLAT model (version 2.1, trained on NHANES 2017–2018) through four read-only <code>GET</code> endpoints. Responses are JSON and there is no API key.</p>
+                    <p>Base URL:</p>
+                    <div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>https://sucrose-api.onrender.com/api</code></pre></div>
+                    <p><code>/food</code>, <code>/combo</code> and <code>/meal-plan</code> wrap their result in an object with <code>data</code> and <code>disclaimer</code>. <code>/glucose-check</code> returns its object directly.</p>
+                    <p class="label-line">Example request</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>curl &quot;https://sucrose-api.onrender.com/api/food?glucose=105&amp;age=30&amp;gender=male&quot;</code></pre></div>
+                </section>
+
+                <section id="try-it">
+                    <h2>Try it</h2>
+                    <p>This sends a real request to the server below.</p>
+                    <div class="try">
+                        <form id="try-form" novalidate>
+                            <label>Endpoint <small>Request to send</small>
+                                <select name="endpoint">
+                                    <option value="glucose-check">/glucose-check</option>
+                                    <option value="food" selected>/food</option>
+                                    <option value="combo">/combo</option>
+                                    <option value="meal-plan">/meal-plan</option>
+                                </select>
+                            </label>
+                            <label>Glucose <small>mg/dL, 20 to 600</small>
+                                <input name="glucose" type="number" min="20" max="600" value="105" required>
+                            </label>
+                            <label>Age <small>18 or older</small>
+                                <input name="age" type="number" min="18" max="120" value="30" required>
+                            </label>
+                            <label>Gender <small>male or female</small>
+                                <select name="gender">
+                                    <option value="male">male</option>
+                                    <option value="female">female</option>
+                                </select>
+                            </label>
+                            <label class="wide">Server address
+                                <input name="base" type="text" inputmode="url" autocomplete="off" spellcheck="false">
+                            </label>
+                            <div class="wide"><button class="btn btn--primary" type="submit">Send request</button></div>
+                        </form>
+                        <div class="out" id="try-out" hidden aria-live="polite">
+                            <div class="meta"><span class="pill" id="try-status"></span><span id="try-time"></span><code id="try-url"></code></div>
+                            <pre id="try-body"></pre>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="parameters">
+                    <h2>Parameters</h2>
+                    <p>All parameters go in the query string.</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Name</th><th>Type</th><th>Used by</th><th>Rules</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>glucose</code></td><td>number</td><td>All endpoints</td><td>Blood sugar in mg/dL, from 20 to 600.</td></tr>
+                                <tr><td><code>age</code></td><td>number</td><td>Every endpoint except <code>/glucose-check</code></td><td>18 or older. Age groups are 18–39, 40–59 and 60+.</td></tr>
+                                <tr><td><code>gender</code></td><td>string</td><td>Every endpoint except <code>/glucose-check</code></td><td><code>male</code> or <code>female</code>, not case-sensitive.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="glucose-check">
+                    <h2>Glucose check</h2>
+                    <div class="endpoint-line"><span class="method">GET</span><code>/api/glucose-check</code></div>
+                    <p>Classifies a reading and returns the limits for its glucose level. Needs only <code>glucose</code>.</p>
+                    <p class="label-line">Request</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>curl &quot;https://sucrose-api.onrender.com/api/glucose-check?glucose=105&quot;</code></pre></div>
+                    <p class="label-line">Response</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>{
+  &quot;clinicalBand&quot;: &quot;Prediabetes&quot;,
+  &quot;limits&quot;: {
+    &quot;sugar&quot;: 12,
+    &quot;net_carb&quot;: 45,
+    &quot;sat_fat&quot;: 10,
+    &quot;carb_penalty&quot;: 0.15
+  },
+  &quot;note&quot;: {
+    &quot;note&quot;: &quot;A fasting glucose of 100 mg/dL or more should be confirmed and discussed with a doctor.&quot;,
+    &quot;disclaimer&quot;: &quot;Educational prototype, not medical advice.&quot;
+  }
+}</code></pre></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>clinicalBand</code></td><td><code>Low (hypoglycemia)</code>, <code>Normal</code>, <code>Prediabetes</code> or <code>Diabetes</code>. See <a href="#levels">Glucose levels</a>.</td></tr>
+                                <tr><td><code>limits</code></td><td>Most a food can have per 100 g at this glucose level: <code>sugar</code>, <code>net_carb</code> and <code>sat_fat</code>, in grams. <code>carb_penalty</code> is a training setting that rises with each level; clients can ignore it.</td></tr>
+                                <tr><td><code>note</code></td><td>Guidance text for the reading, plus the disclaimer.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="food">
+                    <h2>Foods</h2>
+                    <div class="endpoint-line"><span class="method">GET</span><code>/api/food</code></div>
+                    <p>Food groups that adults of your age and gender at your glucose level commonly eat, each with the specific foods that stay within the level’s limits. Groups are ranked by the model, highest first.</p>
+                    <p class="label-line">Request</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>curl &quot;https://sucrose-api.onrender.com/api/food?glucose=105&amp;age=30&amp;gender=male&quot;</code></pre></div>
+                    <p class="label-line">Response, trimmed to one group and two items</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>{
+  &quot;data&quot;: [
+    {
+      &quot;food&quot;: &quot;Fresh fruit&quot;,
+      &quot;code&quot;: 631,
+      &quot;net_carb_100g&quot;: 13.4,
+      &quot;items&quot;: [
+        {
+          &quot;code&quot;: 63107010,
+          &quot;name&quot;: &quot;Banana, raw&quot;,
+          &quot;net_carb_100g&quot;: 20.2
+        },
+        {
+          &quot;code&quot;: 63101000,
+          &quot;name&quot;: &quot;Apple, raw&quot;,
+          &quot;net_carb_100g&quot;: 11.4
+        }
+      ]
+    }
+  ],
+  &quot;disclaimer&quot;: &quot;Educational prototype, not medical advice.&quot;
+}</code></pre></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Field</th><th>Meaning</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>data[].food</code></td><td>Food group name.</td></tr>
+                                <tr><td><code>data[].code</code></td><td>Food group code.</td></tr>
+                                <tr><td><code>data[].net_carb_100g</code></td><td>Net carbs per 100 g for the group, in grams.</td></tr>
+                                <tr><td><code>data[].items</code></td><td>Specific foods in the group allowed at this level, each with <code>code</code>, <code>name</code> and <code>net_carb_100g</code>. Can be empty.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="combo">
+                    <h2>Combos</h2>
+                    <div class="endpoint-line"><span class="method">GET</span><code>/api/combo</code></div>
+                    <p>Pairs of food groups that people at your level often eat together.</p>
+                    <p class="label-line">Request</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>curl &quot;https://sucrose-api.onrender.com/api/combo?glucose=105&amp;age=30&amp;gender=male&quot;</code></pre></div>
+                    <p class="label-line">Response, trimmed to three pairs</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>{
+  &quot;data&quot;: [
+    {
+      &quot;food&quot;: [
+        &quot;Milk&quot;,
+        &quot;Fresh fruit&quot;
+      ]
+    },
+    {
+      &quot;food&quot;: [
+        &quot;Fresh fruit&quot;,
+        &quot;Salad vegetables&quot;
+      ]
+    },
+    {
+      &quot;food&quot;: [
+        &quot;Fresh fruit&quot;,
+        &quot;Cooked vegetables&quot;
+      ]
+    }
+  ],
+  &quot;disclaimer&quot;: &quot;Educational prototype, not medical advice.&quot;
+}</code></pre></div>
+                    <p>Each <code>food</code> array holds two group names. They match <code>data[].food</code> from <code>/food</code>.</p>
+                </section>
+
+                <section id="meal-plan">
+                    <h2>Meal plan</h2>
+                    <div class="endpoint-line"><span class="method">GET</span><code>/api/meal-plan</code></div>
+                    <p>A day’s plan with up to three food groups per meal. No group repeats within the day. A meal’s <code>combo</code> names a pair eaten together, or is <code>null</code> when no unused pair is left. The plan is shuffled on every request, so calling again returns a new one.</p>
+                    <p class="label-line">Request</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>curl &quot;https://sucrose-api.onrender.com/api/meal-plan?glucose=105&amp;age=30&amp;gender=male&quot;</code></pre></div>
+                    <p class="label-line">Response, trimmed to breakfast, two groups and one item each</p><div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>{
+  &quot;data&quot;: {
+    &quot;breakfast&quot;: {
+      &quot;combo&quot;: [
+        &quot;Salad vegetables&quot;,
+        &quot;Raw tomatoes&quot;
+      ],
+      &quot;foods&quot;: [
+        {
+          &quot;food&quot;: &quot;Salad vegetables&quot;,
+          &quot;code&quot;: 751,
+          &quot;net_carb_100g&quot;: 3.7,
+          &quot;items&quot;: [
+            {
+              &quot;code&quot;: 75113000,
+              &quot;name&quot;: &quot;Lettuce, raw&quot;,
+              &quot;net_carb_100g&quot;: 1.7
+            }
+          ]
+        },
+        {
+          &quot;food&quot;: &quot;Raw tomatoes&quot;,
+          &quot;code&quot;: 741,
+          &quot;net_carb_100g&quot;: 2.7,
+          &quot;items&quot;: [
+            {
+              &quot;code&quot;: 74101000,
+              &quot;name&quot;: &quot;Tomatoes, raw&quot;,
+              &quot;net_carb_100g&quot;: 2.7
+            }
+          ]
+        }
+      ]
+    }
+  },
+  &quot;disclaimer&quot;: &quot;Educational prototype, not medical advice.&quot;
+}</code></pre></div>
+                    <p><code>breakfast</code>, <code>lunch</code> and <code>dinner</code> each hold <code>combo</code> and <code>foods</code>. Entries in <code>foods</code> have the same shape as <code>data[]</code> from <code>/food</code>.</p>
+                </section>
+
+                <section id="levels">
+                    <h2>Glucose levels</h2>
+                    <p>A reading maps to one of eight levels. Each level caps sugar, net carbs and saturated fat per 100 g of food. Levels below 100 were mined together, as were levels from 120 up; what changes between them is the limits.</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Level</th><th class="num-col">mg/dL</th><th class="num-col">Sugar (g)</th><th class="num-col">Net carbs (g)</th><th class="num-col">Sat. fat (g)</th></tr></thead>
+                            <tbody>
+<tr><td><span class="pill" data-tone="low">Under 80</span></td><td class="num-col">under 80</td><td class="num-col">15</td><td class="num-col">60</td><td class="num-col">10</td></tr>
+<tr><td><span class="pill" data-tone="normal">80–99</span></td><td class="num-col">80 to 99</td><td class="num-col">15</td><td class="num-col">60</td><td class="num-col">10</td></tr>
+<tr><td><span class="pill" data-tone="elevated">100–119</span></td><td class="num-col">100 to 119</td><td class="num-col">12</td><td class="num-col">45</td><td class="num-col">10</td></tr>
+<tr><td><span class="pill" data-tone="elevated">120–139</span></td><td class="num-col">120 to 139</td><td class="num-col">11</td><td class="num-col">38</td><td class="num-col">10</td></tr>
+<tr><td><span class="pill" data-tone="high">140–159</span></td><td class="num-col">140 to 159</td><td class="num-col">10</td><td class="num-col">31</td><td class="num-col">8</td></tr>
+<tr><td><span class="pill" data-tone="high">160–179</span></td><td class="num-col">160 to 179</td><td class="num-col">9</td><td class="num-col">24</td><td class="num-col">8</td></tr>
+<tr><td><span class="pill" data-tone="high">180–199</span></td><td class="num-col">180 to 199</td><td class="num-col">8</td><td class="num-col">17</td><td class="num-col">8</td></tr>
+<tr><td><span class="pill" data-tone="high">200+</span></td><td class="num-col">200 and above</td><td class="num-col">7</td><td class="num-col">10</td><td class="num-col">8</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <h3>Clinical bands</h3>
+                    <p>The band returned as <code>clinicalBand</code>.</p>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Band</th><th class="num-col">mg/dL</th></tr></thead>
+                            <tbody>
+<tr><td><span class="pill" data-tone="low">Low (hypoglycemia)</span></td><td class="num-col">under 70</td></tr>
+<tr><td><span class="pill" data-tone="normal">Normal</span></td><td class="num-col">70 to 99</td></tr>
+<tr><td><span class="pill" data-tone="elevated">Prediabetes</span></td><td class="num-col">100 to 125</td></tr>
+<tr><td><span class="pill" data-tone="high">Diabetes</span></td><td class="num-col">126 and above</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section id="errors">
+                    <h2>Errors</h2>
+                    <p>Errors return a JSON body with a single <code>error</code> message.</p>
+                    <div class="code"><button class="copy" type="button" aria-label="Copy code">Copy</button><pre><code>{
+  &quot;error&quot;: &quot;age must be 18 or older&quot;
+}</code></pre></div>
+                    <div class="table-wrap">
+                        <table>
+                            <thead><tr><th>Status</th><th>When</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>400</code></td><td>A parameter is missing or invalid: <code>glucose is required and must be a number</code>, <code>age is required and must be a number</code>, <code>gender is required</code>, <code>age must be 18 or older</code>, <code>gender must be one of: male, female</code>, or <code>glucose must be between 20 and 600 mg/dL</code>.</td></tr>
+                                <tr><td><code>404</code></td><td>The route does not exist, or no recommendation was found for the input.</td></tr>
+                                <tr><td><code>500</code></td><td>Unexpected server error: <code>Internal server error</code>.</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="notice"><strong>Educational prototype, not medical advice.</strong> Food responses carry this text in <code>disclaimer</code>; show it wherever you present the results.</div>
+                </section>
+            </article>
+        </div>
     </main>
-    <footer>
-
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="foot-top">
+                <div class="foot-brand"><img class="mark" src="assets/sucrose-mark.svg" alt="" width="28" height="28">Sucrose</div>
+                <nav aria-label="Footer">
+                    <a href="index.html">Home</a>
+                    <a href="docs.html">Documentation</a>
+                    <a href="about.html">About Us</a>
+                </nav>
+            </div>
+            <p>Educational prototype, not medical advice. Suggestions come from NHANES 2017–2018 food records of adults without diagnosed diabetes.</p>
+        </div>
     </footer>
+    <script src="js/docs.js"></script>
 </body>
 </html>

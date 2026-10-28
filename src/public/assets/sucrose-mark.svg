@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Sucrose">
+  <style>
+    .hex{fill:#1E6B47} .pen{fill:#56B484} .ink{fill:#121513}
+    @media (prefers-color-scheme: dark){.hex{fill:#6FCB98} .pen{fill:#2F8A5E} .ink{fill:#F1F3F0}}
+  </style>
+  <mask id="cut" maskUnits="userSpaceOnUse" x="0" y="0" width="64" height="64">
+    <rect width="64" height="64" fill="#fff"/>
+    <path d="M42.26 7.35 Q45.50 5.00 48.74 7.35 L57.48 13.70 Q60.72 16.06 59.48 19.86 L56.14 30.14 Q54.90 33.94 50.90 33.94 L40.10 33.94 Q36.10 33.94 34.86 30.14 L31.52 19.86 Q30.28 16.06 33.52 13.70 Z" fill="#000" stroke="#000" stroke-width="5.5" stroke-linejoin="round"/>
+  </mask>
+  <path class="hex" d="M21.02 21.30 Q25.00 19.00 28.98 21.30 L39.20 27.20 Q43.19 29.50 43.19 34.10 L43.19 45.90 Q43.19 50.50 39.20 52.80 L28.98 58.70 Q25.00 61.00 21.02 58.70 L10.80 52.80 Q6.81 50.50 6.81 45.90 L6.81 34.10 Q6.81 29.50 10.80 27.20 Z" mask="url(#cut)"/>
+  <path class="pen" d="M42.26 7.35 Q45.50 5.00 48.74 7.35 L57.48 13.70 Q60.72 16.06 59.48 19.86 L56.14 30.14 Q54.90 33.94 50.90 33.94 L40.10 33.94 Q36.10 33.94 34.86 30.14 L31.52 19.86 Q30.28 16.06 33.52 13.70 Z"/>
+</svg>

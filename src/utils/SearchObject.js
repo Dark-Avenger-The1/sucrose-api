@@ -4,7 +4,7 @@ export default function searchLinear(obj,search,min,max){
         if(search>val[min] && search<=(val[max])){
             result=val;
         }
-        if(index===obj.length-1) result =val;
+        if(index===obj.length-1 && search>val[min]) result =val;
     })
     return result;
 }

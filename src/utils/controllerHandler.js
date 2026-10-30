@@ -36,17 +36,30 @@ const handle = (service) => async (req, res, next) => {
     }
 };
 
-const handleGlucose = (service)=>async(req,res,next)=>{
+// const handleGlucose = (service)=>async(req,res,next)=>{
+//     try {
+//         const glucose = Number(req.query.glucose);
+
+//         const result = await service(glucose);
+//         if (!result)
+//             return res.status(404).json({ error: "No recommendation found for this input" });
+
+//         res.json(result);
+//     } catch (error) {
+//         next(error.message); 
+//     }
+// }
+
+const handleGlucose = (service) => async (req, res, next) => {
     try {
         const glucose = Number(req.query.glucose);
-
+        if (req.query.glucose === undefined || !Number.isFinite(glucose))
+            return res.status(400).json({ error: "glucose is required and must be a number" });
+        const ruleError = await checkInput(null, null, glucose);
+        if (ruleError) return res.status(400).json({ error: ruleError });
         const result = await service(glucose);
-        if (!result)
-            return res.status(404).json({ error: "No recommendation found for this input" });
-
+        if (!result) return res.status(404).json({ error: "No recommendation found for this input" });
         res.json(result);
-    } catch (error) {
-        next(error.message); 
-    }
-}
+    } catch (err) { next(err); }
+};
 export {handle,handleGlucose};

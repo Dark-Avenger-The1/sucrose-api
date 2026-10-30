@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Sucrose</title>
+    <meta name="description" content="Sucrose is a student-built food guide that turns a blood sugar reading into suggestions based on what adults at that level commonly eat.">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="assets/sucrose-icon-1024.png">
+    <link rel="preload" href="fonts/inter-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="site.css">
+    <link rel="stylesheet" href="about.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+        <div class="wrap">
+            <a class="brand" href="index.html" aria-label="Sucrose home"><img src="assets/sucrose-logo.svg" alt="Sucrose" width="126" height="36"></a>
+            <nav aria-label="Main">
+                <a href="index.html">Home</a>
+                <a href="docs.html">Documentation</a>
+                <a href="about.html" aria-current="page">About Us</a>
+            </nav>
+        </div>
+    </header>
+    <main id="main">
+        <div class="wrap">
+            <div class="about">
+                <h1>A food guide built from what adults actually eat</h1>
+                <p class="lead">Sucrose turns a blood sugar reading into food ideas based on the meals of adults with similar readings, kept within sugar and carb limits that tighten as the level rises.</p>
+
+                <section aria-labelledby="why">
+                    <h2 id="why">Why we built it</h2>
+                    <p>A number on a glucose meter says little about what to eat next. Sucrose gives a starting point: food groups, pairings and a day’s meal plan that are common at your level and fit its limits.</p>
+                    <p>It is a student project, built to show how frequent-pattern mining can turn survey data into something a person can use.</p>
+                </section>
+
+                <section aria-labelledby="data">
+                    <h2 id="data">The data</h2>
+                    <dl class="facts">
+                        <div><dt>Source</dt><dd>NHANES 2017–2018 food records</dd></div>
+                        <div><dt>People</dt><dd>1,885 adults without diagnosed diabetes</dd></div>
+                        <div><dt>Groups</dt><dd>Ages 18–39, 40–59 and 60+, by gender</dd></div>
+                        <div><dt>Glucose levels</dt><dd>8, from under 80 to 200+ mg/dL</dd></div>
+                        <div><dt>Model</dt><dd>ECLAT, version 2.1</dd></div>
+                    </dl>
+                </section>
+
+                <section aria-labelledby="method">
+                    <h2 id="method">How it works</h2>
+                    <p>ECLAT is a frequent-pattern mining algorithm. For each glucose level, age group and gender, Sucrose finds the food groups and pairs that appear most often and records their support, their lift and a Benjamini–Hochberg-adjusted q-value from Fisher’s exact test.</p>
+                    <p>A nutrition filter then checks each food against the level’s limits for sugar, net carbs and saturated fat per 100 g. Readings of 120 mg/dL and above share the same mined patterns, so what changes from one level to the next is how strict the filter is.</p>
+                </section>
+
+                <section aria-labelledby="limits">
+                    <h2 id="limits">What Sucrose is not</h2>
+                    <ul class="plain">
+                        <li>It is not a diagnosis. The clinical band shown for a reading is context, and a single reading should be confirmed with a doctor.</li>
+                        <li>It was built from adults without diagnosed diabetes, so it does not reflect how people with diabetes eat or should eat.</li>
+                        <li>It is for adults 18 and older, with readings from 20 to 600 mg/dL.</li>
+                    </ul>
+                    <div class="notice"><strong>Educational prototype, not medical advice.</strong> Talk to a doctor or dietitian before changing what you eat, especially if you take medication for blood sugar.</div>
+                </section>
+
+                <section aria-labelledby="team">
+                    <h2 id="team">The team</h2>
+                    <ul class="team">
+                        <li><strong>Jasper Davie C. Sam</strong><span>Backend and endpoints</span><a href="https://github.com/Dark-Avenger-The1" rel="noopener">github.com/Dark-Avenger-The1</a></li>
+                        <li><strong>Malachi Keiron Colegado</strong><span>Model and training</span><a href="https://github.com/malachicolegado" rel="noopener">github.com/malachicolegado</a></li>
+                        <!-- Add teammates by copying a line above -->
+                    </ul>
+                </section>
+            </div>
+        </div>
+    </main>
+    <footer class="site-footer">
+        <div class="wrap">
+            <div class="foot-top">
+                <div class="foot-brand"><img class="mark" src="assets/sucrose-mark.svg" alt="" width="28" height="28">Sucrose</div>
+                <nav aria-label="Footer">
+                    <a href="index.html">Home</a>
+                    <a href="docs.html">Documentation</a>
+                    <a href="about.html">About Us</a>
+                </nav>
+            </div>
+            <p>Educational prototype, not medical advice. Suggestions come from NHANES 2017–2018 food records of adults without diagnosed diabetes.</p>
+        </div>
+    </footer>
+</body>
+</html>

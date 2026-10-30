@@ -8,7 +8,7 @@ export default function itemForLevel(model,groupCode,glucose){
     const lim = level.limits_per_100g;
     const fib = model.fiber_exception ?? {min_fiber:1.5,max_sugar:12};
     return item.filter((val)=>{
-        const sugarOK = val.sugar_100g <=lim.sugar || (val.fiber_100g >= fib.min_fiber && val.fiber_100g <= fib.max_sugar);
+        const sugarOK = val.sugar_100g <=lim.sugar || (val.fiber_100g >= fib.min_fiber && val.sugar_100g <= fib.max_sugar);
         return sugarOK && val.net_carb_100g <= lim.net_carb && val.sat_fat_100g <= lim.sat_fat;
     })
 }

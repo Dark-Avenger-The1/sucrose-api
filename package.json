@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Dark-Avenger-The1/sucrose-api#readme",
   "dependencies": {
     "cors": "^2.8.6",
-    "express": "^5.3.0"
+    "express": "^5.3.0",
+    "express-rate-limit": "^8.7.3"
   }
 }

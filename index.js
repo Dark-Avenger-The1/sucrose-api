@@ -7,6 +7,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 const app = express();
 const PORT = process.env.PORT || 3000;
+const HOST = process.env.HOST || "0.0.0.0"
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -43,6 +44,6 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: "Internal server error" });
 });
 
-app.listen(PORT, () => {
-    console.log(`Model ready and running on port ${PORT}`);
+app.listen(PORT, HOST,() => {
+    console.log(`Model ready and running on port ${PORT} ${HOST}`);
 });
